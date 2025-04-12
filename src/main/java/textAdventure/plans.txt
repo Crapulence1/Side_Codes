@@ -1,0 +1,161 @@
+enemies
+    create a take turn method so the actions are varied
+        create method that is dependent on status effects
+    give them a list of status effects
+player
+    Add mana
+    create take turn method to remove from main adventure
+    consider status effects as well
+    make consume potion method
+✅create a status effects class public class StatusEffect(String name, int duration, int damagePerTurn, EffectType type)
+    use enum for various effects
+        burn (fire)
+            damage over time
+                multiplied by weakness
+        stun (lightning)
+            stuns them dumbass
+                longer if weak to it
+        slow (ice)
+            reduces damage
+                more if weak to
+Locations
+    make enemy generator with minimum level in mind
+    5, 10, 20, 40, 60, 80, 100
+remove elements from weapons since there are spells
+create a battle class so its removed from main adventure
+add some rng to attacks so its not boring
+add potions and consumables
+    health restore
+    mana restore
+    create buffs class for various effects
+        reduce incoming damage by 50%
+        increase outgoing damage 20%
+        attack twice
+        increase chance for effect from spell
+
+weapons
+    sword
+    dagger
+    axe
+    hammer
+
+
+spells
+    Fire
+        Fireball
+            30% chance to burn enemy
+        Blazing Vortex
+            surrounds enemies with a flaming vortex slowly damaging them
+        Heat
+            prevents the slow effect from happening for two turns but take 20% increased damage from water type moves
+        Cauterize Wounds
+            damages the player a bit but provides great healing a turn later
+
+    Water
+        Aquatic Slash
+            Deals water and slash damage (lower damage)
+        Douse
+            40% chance to drench the enemy
+        Liquid Coat
+            Coats the body in a layer of water, preventing the burn effect from happening for two turns, but take 20% increase damage from lightning type moves
+        Life Water
+            As long as the player keeps focus, provides a ramping heal effect, beginning small leading into big heals,
+    Air
+        Updraft
+            lifts the opponent in the air immobilizing them for 2 turns (maybe add some randomness for early escape)
+        Air Blast
+            50% chance to confuse the enemy
+        Oxygen Drain
+            As long as the player keeps focus, drain the oxygen from an opponents lungs, actions are limited and any actions allowed have reduced effectiveness 50% chance to lose focus each turn after 2 turns
+        Lifting gust
+            prevents the tremble effect for two turns, but take 20% increased damage from ice type moves
+    Lightning
+        Lightning ray
+            30% chance to paralyze the enemy
+        Storm Surge
+            Summons a large storm that has a chance to damage everyone in the field, including the player (higher damage)
+        Electric Aura
+            by electrifying the atmosphere around the player, it prevents water from reaching the player, prevents the drenched effect, but take 20% increased damage from fire type moves
+        Flash Step
+            increases the players speed by 20%, gives a 20% chance to dodge attack
+        Lightning Spear
+            summons a spear made of lightning and launches it at an enemy, deals both piercing and lightning damage
+    Ice
+        Blizzard
+            20% to slow each enemy (low damage)
+        Snowball
+            40% chance to slow enemy
+        Calming cool
+            by cooling the players body and mind, this prevents confusion, take increased damage from Earth type moves
+        Ice Hammer
+            deals both bludgeoning and ice damage
+    Earth
+        Grounding
+            prevents the paralyzed effect from happening for two turns, take increased damage from air type moves
+        Boulder Launch
+            Launch a boulder at the enemy, 30% chance to inflict tremble
+        Mud trap
+            by turning the ground under the enemy into mud, trap them and decrease their speed
+        Earthly Protection
+            Coats the player in rock, increasing defense
+
+
+
+make weapon and armor generator that takes in player level so it can scale without making brand-new weapon, make it have rng
+
+build first area (forest)
+
+Weapons
+    Make certain category of weapons scale based off dex or str and weapons of certain categories have different physical attributes (one dagger can slash while the other one pierces)
+
+references
+    Tutorial NPC "Chip"
+        stays on your shoulder
+    Holey Knight Aryanna
+        specialized in piercing attacks
+        gets confused if player uses item "Book" (Dyslexia)
+    The Twins, Jake and Emily
+        the visors on their helmets are too thin, making them miss a lot, but when attacks make contact, they deal massive damage
+    Benjamin the Unfocused (to be finished)
+        specializes in RNG
+        randomly says random dialogue, confusing player
+        gets stunned for two turns if player uses item "Unique Silving" (jew)
+    Alexandra and Petra the Felines
+        Petra specializing in slicing (cat swipes)
+        Alexandra specializing in bludgeoning (pouncing)
+        attack each other if player uses item "Yarn Ball"
+    Andrew, Quaker of Worlds
+        specializes in earth and bludgeoning attacks
+        stomps on the ground to create earthquakes
+        defense is lowered if player uses item "Bread Hoop" (Bagel)
+    Miguel the Hopping
+        specializes in air attacks, specifically ones that launch himself in the air
+        gets forced to the ground and reduced damage with air attacks if player uses item "Scroll of Tungsten Balls"
+        When casting scroll Dialogue: "You cast TUNGSTEN BALLS"
+    Vegeta, Fighter for Oreeohs
+        specializes in bludgeoning attacks, knows martial arts
+        high speed (track)
+        slow her down if player uses item "Double Stuffed Oreeoh"
+        include dialogue about being prideful (DBZ vegeta)
+    Edward the Disquieting
+        no dialogue only grunts
+        sometimes whispers "stabby stab"
+        wields knife and specializes in piercing attacks
+        has the option to slash but chooses to stab (maybe should add slashing)
+    Blasé Coal
+        specializes in fire attacks
+        burns you with his drip and style
+    Ryan the Disappointing
+        plays music
+        plays music and when messes up, parents get angry and throw something
+        when stuff is thrown and missed (bludgeoning)
+        specializes in water attacks (tears)
+        and air attacks (music)
+    Electrical Wonder, Ethan
+        specializes in lightning attacks
+    Baker Matthew
+    Johnathan the Sinful
+
+
+
+
