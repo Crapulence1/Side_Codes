@@ -5,12 +5,8 @@ import textAdventure.Armors.Armor;
 import textAdventure.Entities.Enemys.Enemy;
 import textAdventure.Locations.Coordinate;
 import textAdventure.Spells.Spell;
-import textAdventure.StatusEffect;
-import textAdventure.Weapons.Weapon;
-
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 
 public abstract class Entity {

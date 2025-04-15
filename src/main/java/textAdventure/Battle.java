@@ -57,22 +57,15 @@ public class Battle {
         player.printMana();
 
     }
-
+    int turn = 0;
     public void startBattle() throws InterruptedException {
         Scanner in = new Scanner(System.in);
         System.out.println("A battle has started!");
-        int turn = 0;
+
         while(player.getHealth() > 0 && !enemies.isEmpty()){
             System.out.println(); // new line
             Entity entity = turnOrder.get(turn);
-            if(entity instanceof Enemy && entity.getHealth() <= 0) { //if the entity is an enemy and has health less than equal to 0
-                System.out.println(entity.getName() + " has been defeated!");
-                turnOrder.remove(entity); //removes from turn order
-                enemies.remove(entity); //removes from enemy list
-                lootEnemy((Enemy) entity);
-                turn--;
-                Thread.sleep(1000);
-            }
+            cleanDeadEnemies();
             printEnemyInfo();
             printPlayerInfo();
             Thread.sleep(1000);
@@ -80,9 +73,11 @@ public class Battle {
                 System.out.println("It's " + entity.getName() + "'s turn!");
                 Thread.sleep(1000);
                 entity.takeTurn(player); //entity's turn
+                cleanDeadEnemies();
             }
             if(entity instanceof Player){
                 player.takeTurn(enemies);
+                cleanDeadEnemies();
             }
             if(enemies.isEmpty()){
                 System.out.println("You have won!");
@@ -90,6 +85,20 @@ public class Battle {
             turn = (turn+1) % turnOrder.size();
         }
     }
+
+    public void cleanDeadEnemies() throws InterruptedException {
+        for (Entity entity : turnOrder) {
+            if (entity instanceof Enemy && entity.getHealth() <= 0) {
+                System.out.println(entity.getName() + " has been defeated!");
+                turnOrder.remove(entity);
+                enemies.remove(entity);
+                lootEnemy((Enemy) entity); // handle loot
+                turn--;
+                Thread.sleep(1000);
+            }
+        }
+    }
+
 
     public void lootEnemy(Enemy enemy){
         if(enemy.getLoot() != null){
