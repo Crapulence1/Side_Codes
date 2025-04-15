@@ -20,16 +20,13 @@ public class Enemy extends Entity {
     private int xp;
     private ArrayList<Spell> equippedSpells = new ArrayList<>();
 
-    public Enemy(String name, int health, int maxHealth,  int mana, int maxMana, int vitality, int strength, int dexterity, int defense, int speed, int arcana, int knowledge, Coordinate position, Loot loot, Weapon weapon, Armor armor, int xp){
-        super(name, health, maxHealth, mana, maxMana, vitality, strength, dexterity, defense, speed, arcana, knowledge, position);
+    public Enemy(String name, int health, int maxHealth,  int mana, int maxMana, int vitality, int strength, int defense, int speed, int arcana, int knowledge, Coordinate position, Loot loot, Weapon weapon, Armor armor, int xp){
+        super(name, health, maxHealth, mana, maxMana, vitality, strength, defense, speed, arcana, knowledge, position);
         this.loot=loot;
         this.weapon=weapon;
         this.armor=armor;
         this.xp=xp;
     }
-
-
-
 
     public void damage(int num){
         int dam = defenseCalc(num);
@@ -41,23 +38,25 @@ public class Enemy extends Entity {
     @Override
     public void takeTurn(Player player) throws InterruptedException {
         if(isBurn()){
-            int dam = (int) (getMaxHealth() * .05) + 1;
+            int dam = (int) (getMaxHealth() * .2) + 1;
             System.out.println(getName() + " took " + dam + " damage from Burn!");
             setHealth(getHealth() - dam);
             Thread.sleep(1000);
         }
-        if(!getEquippedSpells().isEmpty()) { //checks if spell list is empty
-            int rand = (int) (Math.random() * 2) + 1;
-            switch (rand) {
-                case 1: //swing with weapon
-                    attack(player);
-                    break;
-                case 2: //wants to cast spell
-                    castSpell(player);
-                    break;
+        if(getHealth() > 0) {
+            if (!getEquippedSpells().isEmpty()) { //checks if spell list is empty
+                int rand = (int) (Math.random() * 2) + 1;
+                switch (rand) {
+                    case 1: //swing with weapon
+                        attack(player);
+                        break;
+                    case 2: //wants to cast spell
+                        castSpell(player);
+                        break;
+                }
+            } else {
+                attack(player); //attacks if spell list is empty
             }
-        } else {
-            attack(player); //attacks if spell list is empty
         }
         incrementBurnDuration();
     }

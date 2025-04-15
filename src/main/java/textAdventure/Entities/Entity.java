@@ -19,7 +19,6 @@ public abstract class Entity {
     private int maxHealth; // max hp
     private int vitality; // stat scaling max hp
     private int strength; // stat scaling weapon damage
-    private int dexterity; // stat scaling weapon damage
     private int defense; // stat scaling defense (incoming damage)
     private int speed; // stat scaling speed (turn order)
     private int mana; // current mana
@@ -43,13 +42,12 @@ public abstract class Entity {
     private boolean isElectrified = false; // Lightning status effect
     private int burnDuration = 0; // Counter for burn duration
 
-    public Entity(String name, int health, int maxHealth,  int mana, int maxMana, int vitality, int strength, int dexterity, int defense, int speed, int arcana, int knowledge, Coordinate position) {
+    public Entity(String name, int health, int maxHealth,  int mana, int maxMana, int vitality, int strength, int defense, int speed, int arcana, int knowledge, Coordinate position) {
         this.name=name;
         this.health = health;
         this.maxHealth = maxHealth;
         this.vitality = vitality;
         this.strength = strength;
-        this.dexterity = dexterity;
         this.defense = defense;
         this.speed = speed;
         this.mana = mana;
@@ -69,7 +67,6 @@ public abstract class Entity {
     public int getMaxHealth() { return maxHealth; }
     public int getVitality() { return vitality; }
     public int getStrength() { return strength; }
-    public int getDexterity() { return dexterity; }
     public int getDefense() { return defense; }
     public int getSpeed() { return speed; }
     public int getMana() { return mana; }
@@ -92,7 +89,6 @@ public abstract class Entity {
     public void setMaxHealth(int maxHealth) { this.maxHealth = maxHealth; }
     public void setVitality(int vitality) { this.vitality = vitality; }
     public void setStrength(int strength) { this.strength = strength; }
-    public void setDexterity(int dexterity) { this.dexterity = dexterity; }
     public void setDefense(int defense) { this.defense = defense; }
     public void setSpeed(int speed) { this.speed = speed; }
     public void setMana(int mana) { this.mana = mana; }
@@ -105,14 +101,12 @@ public abstract class Entity {
     // Increment methods
     public void increaseVitality() { this.vitality++; }
     public void increaseStrength() { this.strength++; }
-    public void increaseDexterity() { this.dexterity++; }
     public void increaseDefense() { this.defense++; }
     public void increaseSpeed() { this.speed++; }
     public void increaseArcana() { this.arcana++; }
     public void increaseKnowledge() { this.knowledge++; }
 
-        // Additional helper methods
-
+    // Additional helper methods
 
     public void loseHealth(int num){
         health -= num;
@@ -129,12 +123,36 @@ public abstract class Entity {
     public void inflictStatus(Affinity affinity) throws InterruptedException {
         String effect = affinity.getName();
         switch (affinity.getType()) {
-            case fire: isBurn = true; break;
-            case lightning: isParalyze = true; break;
-            case water: isDrench = true; break;
-            case air: isConfuse = true; break;
-            case earth: isTremble = true; break;
-            case ice: isSlow = true; break;
+            case fire:
+                if(!isBurn()){
+                    isBurn = true;
+                }
+                break;
+            case lightning:
+                if(!isParalyze()) {
+                    isParalyze = true;
+                }
+                break;
+            case water:
+                if(!isDrench()) {
+                    isDrench = true;
+                }
+                break;
+            case air:
+                if(!isConfuse()){
+                    isConfuse = true;
+                }
+                break;
+            case earth:
+                if(!isTremble()) {
+                    isTremble = true;
+                }
+                break;
+            case ice:
+                if(!isSlow()) {
+                    isSlow = true;
+                }
+                break;
         }
         System.out.println(name + " is now affected by " + effect + "!");
         Thread.sleep(1000);
@@ -158,7 +176,7 @@ public abstract class Entity {
 
     public int calculateDamageTaken(int baseDamage, int defense, Affinity affinity, Armor armor) { //scales damage down depending on defense
         double k = 60.0; // Scaling constant
-        int dam = (int) (baseDamage / (1 + ((defense + armor.getDefense() / k))));
+        int dam = (int) ((baseDamage * 3)/ (1 + ((defense + armor.getDefense() / k))));
         if(isWeak(affinity)){
             dam = (int) (dam * 1.5);
         }
@@ -221,7 +239,6 @@ public abstract class Entity {
     public void printStats(){
         System.out.println("Vitality: " + vitality);
         System.out.println("Strength: " + strength);
-        System.out.println("Dexterity: " + dexterity);
         System.out.println("Defense: " + defense);
         System.out.println("Speed: " + speed);
         System.out.println("Arcana: " + arcana);
@@ -274,7 +291,7 @@ public abstract class Entity {
     }
 
     // Burn duration methods
-    public void incrementBurnDuration() {
+    public void incrementBurnDuration() throws InterruptedException {
         if (isBurn) {
             burnDuration = (burnDuration + 1) % 3;
             if(burnDuration == 0){
@@ -287,9 +304,11 @@ public abstract class Entity {
         return burnDuration;
     }
 
-    private void resetBurnStatus() {
+    private void resetBurnStatus() throws InterruptedException {
         isBurn = false;
         burnDuration = 0;
+        System.out.println(getName() + " is no longer affected by Burn.");
+        Thread.sleep(1000);
     }
 
 

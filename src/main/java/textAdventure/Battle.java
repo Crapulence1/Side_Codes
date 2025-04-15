@@ -71,11 +71,12 @@ public class Battle {
                 enemies.remove(entity); //removes from enemy list
                 lootEnemy((Enemy) entity);
                 turn--;
+                Thread.sleep(1000);
             }
             printEnemyInfo();
             printPlayerInfo();
             Thread.sleep(1000);
-            if(entity instanceof Enemy) {
+            if(entity instanceof Enemy && entity.getHealth() > 0) {
                 System.out.println("It's " + entity.getName() + "'s turn!");
                 Thread.sleep(1000);
                 entity.takeTurn(player); //entity's turn
@@ -83,19 +84,10 @@ public class Battle {
             if(entity instanceof Player){
                 player.takeTurn(enemies);
             }
-
             if(enemies.isEmpty()){
                 System.out.println("You have won!");
             }
             turn = (turn+1) % turnOrder.size();
-        }
-
-        if(player.getHealth() <= 0){
-            player.gameover(); //kills player
-        } else {
-            System.out.println("You win!");
-
-
         }
     }
 

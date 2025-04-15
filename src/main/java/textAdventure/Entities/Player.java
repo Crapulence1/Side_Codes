@@ -19,7 +19,7 @@ public class Player extends Entity{
     double baseGrowth = 1.1;
 
     public Player(){
-        super("Player", 50, 50, 40, 40, 5, 5, 5, 5, 5, 5, 5, new Coordinate(0, 0));
+        super("Player", 50, 50, 40, 40, 5, 5, 5, 5, 5, 5, new Coordinate(0, 0));
         level = 1;
         xp = 0;
         thresholdXp = growthXp(level);
@@ -110,15 +110,13 @@ public class Player extends Entity{
                     growHealth();
                 case "2", "strength":
                     increaseStrength();
-                case "3", "dexterity":
-                    increaseDexterity();
-                case "4", "defense":
+                case "3", "defense":
                     increaseDefense();
-                case "5", "speed":
+                case "4", "speed":
                     increaseSpeed();
-                case "6", "arcana":
+                case "5", "arcana":
                     increaseArcana();
-                case "7", "knowledge":
+                case "6", "knowledge":
                     increaseKnowledge();
                     growMana();
             }
@@ -221,6 +219,7 @@ public class Player extends Entity{
                     target = in.nextInt();
                 }
                 enemies.get(target - 1).damage(casting, getKnowledge());
+                setMana(getMana() - casting.getCost());
                 break;
 
             case "3", "nothing":

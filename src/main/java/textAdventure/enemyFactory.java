@@ -27,8 +27,8 @@ public class enemyFactory {
         while(count < size + 1){
             int[] statBlock = randomStats();
             makeHealth(statBlock[0]); //creates max health and health based off vitality
-            makeMana(statBlock[6]); //creates max mana and mana based off knowledge
-            Enemy enemy = new Enemy("Goblin " + count, health, maxHealth, mana, maxMana, statBlock[0], statBlock[1], statBlock[2], statBlock[3], statBlock[4], statBlock[5], statBlock[6], coordinate, null, null, randomArmor(), randomXp());
+            makeMana(statBlock[5]); //creates max mana and mana based off knowledge
+            Enemy enemy = new Enemy("Goblin " + count, health, maxHealth, mana, maxMana, statBlock[0], statBlock[1], statBlock[2], statBlock[3], statBlock[4], statBlock[5], coordinate, null, null, randomArmor(), randomXp());
             enemy.setWeapon(randomWeapon());
             enemies.add(enemy);
             count++; //change loot to something proper later
@@ -64,13 +64,18 @@ public class enemyFactory {
     }
 
     public int[] randomStats(){
-        int[] stats = new int[7];
-        // {Vitality, Strength, Dexterity, Defense, Speed, Arcana, Knowledge}
-        int points = 35 + (5 * lvl);
+        int[] stats = new int[6];
+        // {Vitality, Strength, Defense, Speed, Arcana, Knowledge}
+        int points = 30 + (5 * lvl);
+        int maxPoints = points;
         while(points > 0) {
-            int rand = (int) (Math.random() * 7); // roll new random each time
+            int rand = (int) (Math.random() * 6); // roll new random each time
+            while(stats[rand] > maxPoints/5){ //rerolls the stat if it's greater than a certain amount
+                rand = (int) (Math.random() * 6);
+            }
             stats[rand]++;
             points--;
+
         }
         points--;
         return stats;
@@ -132,15 +137,14 @@ public class enemyFactory {
             default:
                 throw new Exception("Somethings wrong");
         }
-        int baseDamage = lvl * 10;
+        int baseDamage = lvl * 5;
 
         // Apply ±10% variance
         double variance = 0.1; // 10%
         int minDamage = (int) Math.floor(baseDamage * (1 - variance));
         int maxDamage = (int) Math.ceil(baseDamage * (1 + variance));
         int damage = rand.nextInt(maxDamage - minDamage + 1) + minDamage;
-        Weapon weapon = new Weapon(name, damage, type);
-        return weapon;
+        return new Weapon(name, damage, type);
     }
 
 

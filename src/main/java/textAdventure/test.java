@@ -13,12 +13,14 @@ public class test {
     public static void main(String[] args) throws Exception {
         enemyFactory generator = new enemyFactory(1);
         Player player = new Player();
-        player.setEquippedWeapon(new Weapon("Sword", 5, new Affinity("Slash", Type.slash)));
-        player.setEquippedArmor(new Armor("Armor", 5, "Slash"));
+        player.setEquippedWeapon(new Weapon("Sword", 12, new Affinity("Slash", Type.slash)));
+        player.setEquippedArmor(new Armor("Armor", 15, "Slash"));
         player.learnSpell(new Fireball());
-        System.out.println(player.getEquippedSpells().size());
-
         ArrayList<Enemy> enemies = generator.getEnemies(2, new Coordinate(0, 0));
+        for(Enemy enemy: enemies){
+            System.out.println(enemy.getName());
+            enemy.printStats();
+        }
         Battle battle = new Battle(player, enemies);
         battle.startBattle();
     }
